@@ -1,10 +1,7 @@
 const express = require('express')
 const router = express.Router()
+const storeCtrl = require('../controllers/store')
 
-router.get('/', (req, res) =>
-  res.render('main', req.query))
-
-router.get('/reverse/:name', (req, res) =>
-  res.send(req.params.name.split('').reverse().join('')))
+router.get('/', storeCtrl.homePage)
 
 module.exports = router
