@@ -16,6 +16,6 @@ mixin storeForm (store = {})
     ul.tags
       each c in choices
         .tag.tag__choice
-          input(type='checkbox' id=c value=c name='tags' checked=(tags.includes(choice)))
+          input(type='checkbox' id=c value=c name='tags' checked=(tags.includes(c)))
           label(for=c) #{c}
     input(type='submit' value='Save' class='button')
