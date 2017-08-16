@@ -7,5 +7,7 @@ router.get('/', catchErrors(storeCtrl.getStores))
 router.get('/stores', catchErrors(storeCtrl.getStores))
 router.get('/add', storeCtrl.addStore)
 router.post('/add', catchErrors(storeCtrl.createStore))
+router.post('/add/id', catchErrors(storeCtrl.updateStore))
+router.get('/stores/:id/edit', catchErrors(storeCtrl.editStore))
 
 module.exports = router
