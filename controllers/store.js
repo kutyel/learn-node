@@ -20,6 +20,7 @@ exports.editStore = async (req, res) => {
 }
 
 exports.updateStore = async (req, res) => {
+  req.body.location.type = 'Point' // fix location updates
   const store = await Store.findOneAndUpdate(
     { _id: req.params.id },
     req.body,
