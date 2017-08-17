@@ -32,6 +32,7 @@ const schema = new mongoose.Schema({
     trim: true,
     required: 'Please enter a store name!'
   },
+  photo: String,
   slug: String,
   tags: [String]
 })
