@@ -39,11 +39,9 @@ const schema = new mongoose.Schema({
 
 schema.pre('save', async function (next) {
   this.isModified('name') && (this.slug = slug(this.name))
-  const slugReg = new RegExp(`^(${this.slug})((-[0-9]*$)?)$`, 'i')
-  const storesWithSlug = await this.constructor.find({ slug: slugReg })
-  if (storesWithSlug.length) {
-    this.slug = `${this.slug}-${storesWithSlug.length + 1}`
-  }
+  const slug = new RegExp(`^(${this.slug})((-[0-9]*$)?)$`, 'i')
+  const storesWithSlug = await this.constructor.find({ slug })
+  storesWithSlug.length && (this.slug = `${this.slug}-${storesWithSlug.length + 1}`)
   next()
 })
 
