@@ -21,4 +21,6 @@ router.post('/add/:id',
 
 router.get('/stores/:id/edit', catchErrors(storeCtrl.editStore))
 
+router.get('/store/:slug', catchErrors(storeCtrl.getStoreBySlug))
+
 module.exports = router
