@@ -37,9 +37,13 @@ const schema = new mongoose.Schema({
   tags: [String]
 })
 
-schema.pre('save', function (next) {
-  // TODO: make more resilient so that slugs are unique
+schema.pre('save', async function (next) {
   this.isModified('name') && (this.slug = slug(this.name))
+  const slugReg = new RegExp(`^(${this.slug})((-[0-9]*$)?)$`, 'i')
+  const storesWithSlug = await this.constructor.find({ slug: slugReg })
+  if (storesWithSlug.length) {
+    this.slug = `${this.slug}-${storesWithSlug.length + 1}`
+  }
   next()
 })
 
