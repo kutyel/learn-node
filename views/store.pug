@@ -3,7 +3,7 @@ extends layout
 block content
   .single
     .single__hero
-      img.single__img(src=`/uploads/${store.photo || 'store.png'}`)
+      img.single__image(src=`/uploads/${store.photo || 'store.png'}`)
       h2.title.title--single
         a(href=`/store/${store.slug}`) #{store.name}
   .single__details.inner
