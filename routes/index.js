@@ -20,7 +20,9 @@ router.post('/add/:id',
 )
 
 router.get('/stores/:id/edit', catchErrors(storeCtrl.editStore))
-
 router.get('/store/:slug', catchErrors(storeCtrl.getStoreBySlug))
+
+router.get('/tags', catchErrors(storeCtrl.getStoresByTag))
+router.get('/tags/:tag', catchErrors(storeCtrl.getStoresByTag))
 
 module.exports = router
