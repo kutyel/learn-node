@@ -14,13 +14,13 @@ const schema = new Schema({
     lowercase: true,
     trim: true,
     validate: [validator.isEmail, 'Invalid Email Address'],
-    required: 'Please supply an email address'
+    required: 'Please supply an email address',
   },
   name: {
     type: String,
     required: 'Please supply a name',
-    trim: true
-  }
+    trim: true,
+  },
 })
 
 schema.plugin(passport, { userNameField: 'email' })

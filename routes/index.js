@@ -9,13 +9,15 @@ router.get('/', catchErrors(storeCtrl.getStores))
 router.get('/stores', catchErrors(storeCtrl.getStores))
 router.get('/add', storeCtrl.addStore)
 
-router.post('/add',
+router.post(
+  '/add',
   storeCtrl.upload,
   catchErrors(storeCtrl.resize),
   catchErrors(storeCtrl.createStore)
 )
 
-router.post('/add/:id',
+router.post(
+  '/add/:id',
   storeCtrl.upload,
   catchErrors(storeCtrl.resize),
   catchErrors(storeCtrl.updateStore)
@@ -31,7 +33,8 @@ router.get('/login', userCtrl.loginForm)
 router.get('/register', userCtrl.registerForm)
 
 // router.post('/login', userCtrl.loginForm)
-router.post('/register',
+router.post(
+  '/register',
   userCtrl.validateRegister,
   userCtrl.register,
   authCtrl.login

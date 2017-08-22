@@ -7,13 +7,13 @@ const Store = mongoose.model('Store')
 
 const multerOptions = {
   storage: multer.memoryStorage(),
-  fileFilter: (req, file, next) => file.mimetype.startsWith('image')
-    ? next(null, true)
-    : next({ message: 'That filetype isn\'t allowed!' }, false)
+  fileFilter: (req, file, next) =>
+    file.mimetype.startsWith('image')
+      ? next(null, true)
+      : next({ message: "That filetype isn't allowed!" }, false),
 }
 
-exports.addStore = (req, res) =>
-  res.render('edit', { title: 'Add Store' })
+exports.addStore = (req, res) => res.render('edit', { title: 'Add Store' })
 
 exports.upload = multer(multerOptions).single('photo')
 
@@ -28,8 +28,11 @@ exports.resize = async (req, res, next) => {
 }
 
 exports.createStore = async (req, res) => {
-  const store = await (new Store(req.body)).save()
-  req.flash('success', `Successfully created ${store.name}. Please leave a review!`)
+  const store = await new Store(req.body).save()
+  req.flash(
+    'success',
+    `Successfully created ${store.name}. Please leave a review!`
+  )
   res.redirect(`/store/${store.slug}`)
 }
 
@@ -44,12 +47,14 @@ exports.editStore = async (req, res) => {
 
 exports.updateStore = async (req, res) => {
   req.body.location.type = 'Point' // fix location updates
-  const store = await Store.findOneAndUpdate(
-    { _id: req.params.id },
-    req.body,
-    { new: true, runValidators: true }
-  ).exec()
-  req.flash('success', `Successfully updated <strong>${store.name}</strong>! <a href="/store/${store.slug}">View Store</a>`)
+  const store = await Store.findOneAndUpdate({ _id: req.params.id }, req.body, {
+    new: true,
+    runValidators: true,
+  }).exec()
+  req.flash(
+    'success',
+    `Successfully updated <strong>${store.name}</strong>! <a href="/store/${store.slug}">View Store</a>`
+  )
   res.redirect(`/stores/${store._id}/edit`)
 }
 
@@ -64,7 +69,7 @@ exports.getStoresByTag = async (req, res) => {
   const tagQuery = tag || { $exists: true }
   const [tags, stores] = await Promise.all([
     Store.getTagsList(),
-    Store.find({ tags: tagQuery })
+    Store.find({ tags: tagQuery }),
   ])
   res.render('tags', { title: 'Tags', tag, tags, stores })
 }
