@@ -1,7 +1,7 @@
 const errorHandler = require('mongoose-mongodb-errors')
 const md5 = require('md5')
 const mongoose = require('mongoose')
-const passport = require('password-local-mongoose')
+const passport = require('passport-local-mongoose')
 const validator = require('validator')
 
 const Schema = mongoose.Schema
