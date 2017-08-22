@@ -36,7 +36,7 @@ router.get('/register', userCtrl.registerForm)
 router.post(
   '/register',
   userCtrl.validateRegister,
-  userCtrl.register,
+  catchErrors(userCtrl.register),
   authCtrl.login
 )
 
