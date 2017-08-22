@@ -23,7 +23,7 @@ const schema = new Schema({
   },
 })
 
-schema.plugin(passport, { userNameField: 'email' })
+schema.plugin(passport, { usernameField: 'email' })
 schema.plugin(errorHandler)
 
 module.exports = mongoose.model('User', schema)
