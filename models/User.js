@@ -23,6 +23,11 @@ const schema = new Schema({
   },
 })
 
+schema.virtual('gravatar').get(function() {
+  const hash = md5(this.email)
+  return `https://gravatar.com/avatar/${hash}?s=200`
+})
+
 schema.plugin(passport, { usernameField: 'email' })
 schema.plugin(errorHandler)
 
