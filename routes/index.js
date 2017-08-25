@@ -44,5 +44,12 @@ router.get('/logout', authCtrl.logout)
 
 router.get('/account', authCtrl.isLoggedIn, userCtrl.account)
 router.post('/account', catchErrors(userCtrl.updateAccount))
+router.post('/account/forgot', catchErrors(authCtrl.forgot))
+router.get('/account/reset/:token', catchErrors(authCtrl.reset))
+router.post(
+  '/account/reset/:token',
+  authCtrl.confirmPasswords,
+  catchErrors(authCtrl.update)
+)
 
 module.exports = router
