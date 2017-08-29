@@ -28,6 +28,7 @@ exports.resize = async (req, res, next) => {
 }
 
 exports.createStore = async (req, res) => {
+  req.body.author = req.user._id
   const store = await new Store(req.body).save()
   req.flash(
     'success',
@@ -41,7 +42,9 @@ exports.getStores = async (req, res) =>
 
 exports.editStore = async (req, res) => {
   const store = await Store.findOne({ _id: req.params.id })
-  // TODO: confirm they are the owner of the store
+  if (!store.author.equals(req.user._id)) {
+    throw Error('You must own a store in order to edit it!')
+  }
   res.render('edit', { title: `Edit ${store.name}`, store })
 }
 

@@ -3,6 +3,11 @@ const mongoose = require('mongoose')
 mongoose.Promise = global.Promise
 
 const schema = new mongoose.Schema({
+  author: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+    required: 'You must supply an author',
+  },
   created: {
     type: Date,
     default: Date.now,
