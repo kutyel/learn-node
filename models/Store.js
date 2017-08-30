@@ -42,6 +42,11 @@ const schema = new mongoose.Schema({
   tags: [String],
 })
 
+schema.index({
+  name: 'text',
+  description: 'text',
+})
+
 schema.pre('save', async function(next) {
   this.isModified('name') && (this.slug = slug(this.name))
   const slugRegExp = new RegExp(`^(${this.slug})((-[0-9]*$)?)$`, 'i')

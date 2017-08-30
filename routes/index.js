@@ -52,4 +52,10 @@ router.post(
   catchErrors(authCtrl.update)
 )
 
+/**
+ * API
+ */
+
+router.get('/api/search', catchErrors(storeCtrl.searchStores))
+
 module.exports = router
