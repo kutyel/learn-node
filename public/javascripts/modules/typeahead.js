@@ -16,25 +16,25 @@ export default search => {
     const input = search.querySelector('input[name="search"]')
     const results = search.querySelector('.search__results')
 
-    input.on('input', function() {
+    input.on('input', async function() {
       if (!this.value) {
         results.style.display = 'none'
         return
       }
       results.style.display = 'block'
       results.innerHTML = ''
-      fetch(`/api/search?q=${this.value}`)
-        .then(res => res.json())
-        .then(
-          data =>
-            (results.innerHTML = purify.sanitize(
-              data.length
-                ? resultsHTML(data)
-                : `<div class="search__result">No results for <mark>${this
-                    .value}</mark> found!</div>`
-            ))
+      try {
+        const res = await fetch(`/api/search?q=${this.value}`)
+        const data = await res.json()
+        results.innerHTML = purify.sanitize(
+          data.length
+            ? resultsHTML(data)
+            : `<div class="search__result">No results for <mark>${this
+                .value}</mark> found!</div>`
         )
-        .catch(err => console.error(err))
+      } catch (err) {
+        console.error(err)
+      }
     })
 
     // handle keyboard inputs
