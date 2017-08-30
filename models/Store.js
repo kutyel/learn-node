@@ -47,6 +47,10 @@ schema.index({
   description: 'text',
 })
 
+schema.index({
+  location: '2dsphere',
+})
+
 schema.pre('save', async function(next) {
   this.isModified('name') && (this.slug = slug(this.name))
   const slugRegExp = new RegExp(`^(${this.slug})((-[0-9]*$)?)$`, 'i')
