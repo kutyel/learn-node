@@ -51,6 +51,7 @@ router.post(
   authCtrl.confirmPasswords,
   catchErrors(authCtrl.update)
 )
+router.get('/map', storeCtrl.mapPage)
 
 /**
  * API
