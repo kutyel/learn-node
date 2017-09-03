@@ -52,6 +52,7 @@ router.post(
   catchErrors(authCtrl.update)
 )
 router.get('/map', storeCtrl.mapPage)
+router.get('/hearts', authCtrl.isLoggedIn, catchErrors(storeCtrl.getHearts))
 
 /**
  * API

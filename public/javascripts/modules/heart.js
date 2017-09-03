@@ -1,12 +1,13 @@
+import { post } from 'axios'
+
 import { $ } from './bling'
 
 export default async function(e) {
   e.preventDefault()
   try {
-    const res = await fetch(this.action, { method: 'POST' })
-    const data = await res.json()
+    const res = await post(this.action)
     const isHearted = this.heart.classList.toggle('heart__button--hearted')
-    $('.heart-count').textContent = data.hearts.length
+    $('.heart-count').textContent = res.data.hearts.length
     if (isHearted) {
       this.heart.classList.add('heart__button--float')
       setTimeout(
