@@ -32,4 +32,4 @@ coverage
 ############################
 .node_history
 variables.env
-public/dist
+variables.env.now
