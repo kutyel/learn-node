@@ -1,9 +1,12 @@
-const authCtrl = require('../controllers/auth')
 const express = require('express')
-const router = express.Router()
+
+const authCtrl = require('../controllers/auth')
 const storeCtrl = require('../controllers/store')
 const userCtrl = require('../controllers/user')
+const reviewCtrl = require('../controllers/review')
 const { catchErrors } = require('../handlers/errorHandlers')
+
+const router = express.Router()
 
 router.get('/', catchErrors(storeCtrl.getStores))
 router.get('/stores', catchErrors(storeCtrl.getStores))
@@ -53,6 +56,11 @@ router.post(
 )
 router.get('/map', storeCtrl.mapPage)
 router.get('/hearts', authCtrl.isLoggedIn, catchErrors(storeCtrl.getHearts))
+router.post(
+  '/reviews/:id',
+  authCtrl.isLoggedIn,
+  catchErrors(reviewCtrl.addReview)
+)
 
 /**
  * API
