@@ -74,10 +74,46 @@ schema.statics.getTagsList = function() {
   ])
 }
 
+schema.statics.getTopStores = function() {
+  return this.aggregate([
+    // Lookup stores and populate theirs reviews
+    {
+      $lookup: {
+        from: 'reviews',
+        localField: '_id',
+        foreignField: 'store',
+        as: 'reviews',
+      },
+    },
+    // Filter for only stores that have 2 or more reviews
+    {
+      $match: { 'reviews.1': { $exists: true } },
+    },
+    // Add the average reviews field
+    {
+      $addFields: {
+        averageRating: { $avg: '$reviews.rating' },
+      },
+    },
+    // Sort by average rating DESC
+    { $sort: { averageRating: -1 } },
+    // Limit to at most 10
+    { $limit: 10 },
+  ])
+}
+
 schema.virtual('reviews', {
   ref: 'Review',
   localField: '_id',
   foreignField: 'store',
 })
+
+function autoPopulate(next) {
+  this.populate('reviews')
+  next()
+}
+
+schema.pre('find', autoPopulate)
+schema.pre('findOne', autoPopulate)
 
 module.exports = mongoose.model('Store', schema)

@@ -61,6 +61,7 @@ router.post(
   authCtrl.isLoggedIn,
   catchErrors(reviewCtrl.addReview)
 )
+router.get('/top', catchErrors(storeCtrl.getTopStores))
 
 /**
  * API
