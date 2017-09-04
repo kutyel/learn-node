@@ -5,12 +5,12 @@ block content
     h2 Top #{stores.length} Stores
     table.table
       thead
-        td photo
-        td ranking
-        td name
-        td reviews
+        td Photo
+        td Ranking
+        td Name
+        td Reviews
         td Average Rating
-      each stores, i in stores
+      each store, i in stores
         tr
           td
             a(href=`/store/${store.slug}`)
