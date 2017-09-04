@@ -2,45 +2,51 @@ const slug = require('slugs')
 const mongoose = require('mongoose')
 mongoose.Promise = global.Promise
 
-const schema = new mongoose.Schema({
-  author: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'User',
-    required: 'You must supply an author',
-  },
-  created: {
-    type: Date,
-    default: Date.now,
-  },
-  description: {
-    type: String,
-    trim: true,
-  },
-  location: {
-    type: {
-      type: String,
-      default: 'Point',
+const schema = new mongoose.Schema(
+  {
+    author: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User',
+      required: 'You must supply an author',
     },
-    coordinates: [
-      {
-        type: Number,
-        required: 'You must supply coordinates!',
+    created: {
+      type: Date,
+      default: Date.now,
+    },
+    description: {
+      type: String,
+      trim: true,
+    },
+    location: {
+      type: {
+        type: String,
+        default: 'Point',
       },
-    ],
-    address: {
-      type: String,
-      required: 'You must supply an address!',
+      coordinates: [
+        {
+          type: Number,
+          required: 'You must supply coordinates!',
+        },
+      ],
+      address: {
+        type: String,
+        required: 'You must supply an address!',
+      },
     },
+    name: {
+      type: String,
+      trim: true,
+      required: 'Please enter a store name!',
+    },
+    photo: String,
+    slug: String,
+    tags: [String],
   },
-  name: {
-    type: String,
-    trim: true,
-    required: 'Please enter a store name!',
-  },
-  photo: String,
-  slug: String,
-  tags: [String],
-})
+  {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  }
+)
 
 schema.index({
   name: 'text',
@@ -67,5 +73,11 @@ schema.statics.getTagsList = function() {
     { $sort: { count: -1 } },
   ])
 }
+
+schema.virtual('reviews', {
+  ref: 'Review',
+  localField: '_id',
+  foreignField: 'store',
+})
 
 module.exports = mongoose.model('Store', schema)

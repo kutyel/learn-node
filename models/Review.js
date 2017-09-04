@@ -28,4 +28,12 @@ const schema = new mongoose.Schema({
   },
 })
 
+function autoPopulate(next) {
+  this.populate('author')
+  next()
+}
+
+schema.pre('find', autoPopulate)
+schema.pre('findOne', autoPopulate)
+
 module.exports = mongoose.model('Review', schema)

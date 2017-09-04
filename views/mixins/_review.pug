@@ -1,9 +1,11 @@
-mixin reviewForm(store)
-  form.reviewer(method='POST' action=`/reviews/${store._id}`)
-    textarea(name='text' placeholder='Did you try this place? Have something to say? Leave a review...')
-    .reviewer__meta
-      .reviewer__stars
-        each num in [5,4,3,2,1]
-          input(type='radio' required id=`star${num}` name='rating' value=num)
-          label(for=`star${num}`) #{num} Stars
-      input.button(type='submit' value='Submit Review!')
+mixin review(review)
+  .review__header
+    .review__author
+      img.avatar(src=review.author.gravatar)
+      p= review.author.name
+    .review__stars(title=`Rated ${review.rating} out of 5 stars`)
+      = '★'.repeat(review.rating)
+      = '☆'.repeat(5 - review.rating)
+    time.review__time(datetime=review.created)= h.moment(review.created).fromNow()
+  .review__body
+    p= review.text
