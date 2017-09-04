@@ -10,6 +10,7 @@ const router = express.Router()
 
 router.get('/', catchErrors(storeCtrl.getStores))
 router.get('/stores', catchErrors(storeCtrl.getStores))
+router.get('/stores/page/:page', catchErrors(storeCtrl.getStores))
 router.get('/add', authCtrl.isLoggedIn, storeCtrl.addStore)
 
 router.post(
