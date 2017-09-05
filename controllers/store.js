@@ -52,7 +52,7 @@ exports.getStores = async (req, res) => {
   if (!stores.length && skip) {
     req.flash(
       'info',
-      `Hey! You asked for page ${20}. But that does not exist, so I put you on page ${pages}.`
+      `Hey! You asked for page ${page}. But that does not exist, so I put you on page ${pages}.`
     )
     res.redirect(`/stores/page/${pages}`)
     return
